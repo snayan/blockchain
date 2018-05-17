@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
+    <title>chai app</title>
+    <script>
+      (function (win, doc) {
+        var docEl = doc.documentElement;
+
+        function setRemUnit() {
+          var docWidth = docEl.clientWidth;
+          var rem = docWidth / 10;
+          docEl.style.fontSize = rem + 'px';
+        }
+
+        win.addEventListener('resize', function () {
+          setRemUnit();
+        }, false);
+        win.addEventListener('pageshow', function (e) {
+          if (e.persisted) {
+            setRemUnit();
+          }
+        }, false);
+
+        setRemUnit();
+
+        if (win.devicePixelRatio && win.devicePixelRatio >= 2) {
+          var testEl = doc.createElement('div');
+          var fakeBody = doc.createElement('body');
+          testEl.style.border = '0.5px solid transparent';
+          fakeBody.appendChild(testEl);
+          docEl.appendChild(fakeBody);
+          if (testEl.offsetHeight === 1) {
+            docEl.classList.add('hairlines');
+          }
+          docEl.removeChild(fakeBody);
+        }
+      })(window, document);
+    </script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <!-- built files will be auto injected -->
+  </body>
+</html>
